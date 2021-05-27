@@ -1,6 +1,7 @@
 package fr.arolla.skocher.trainreservation;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Reservation {
 
@@ -12,6 +13,19 @@ public class Reservation {
         this.trainId = trainId;
         this.bookingId = bookingId;
         this.seats = seats;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(trainId, that.trainId) && Objects.equals(bookingId, that.bookingId) && Objects.equals(seats, that.seats);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(trainId, bookingId, seats);
     }
 
 }

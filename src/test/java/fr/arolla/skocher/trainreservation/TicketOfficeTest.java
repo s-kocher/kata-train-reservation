@@ -1,5 +1,7 @@
 package fr.arolla.skocher.trainreservation;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +21,22 @@ public class TicketOfficeTest {
         seat.setBookingReference("75bcd15");
 
         Assertions.assertFalse(seat.isFree());
+    }
+
+    @Test
+    public void should_a_1_seat_reservation_in_an_empty_coach_be_approved() {
+        TicketOffice ticketOffice = new TicketOffice();
+
+        Reservation reservation = ticketOffice.makeReservation(
+            new ReservationRequest("express_2000", 1)
+        );
+
+        Reservation expectReservation = new Reservation(
+            "express_2000",
+            List.of(new Seat("A", 1)),
+            "75bcd15"
+        );
+        Assertions.assertEquals(expectReservation, reservation);
     }
 
 }
