@@ -17,6 +17,15 @@ public class Seat {
         return coach == other.coach && seatNumber == other.seatNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Seat{" +
+            "coach='" + coach + '\'' +
+            ", seatNumber=" + seatNumber +
+            ", bookingReference='" + bookingReference + '\'' +
+            '}';
+    }
+
     public boolean isFree() {
         return bookingReference.isEmpty();
     }

@@ -28,4 +28,12 @@ public class Reservation {
         return Objects.hash(trainId, bookingId, seats);
     }
 
+    @Override
+    public String toString() {
+        return "Reservation{" +
+            "trainId='" + trainId + '\'' +
+            ", bookingId='" + bookingId + '\'' +
+            ", seats=" + seats +
+            '}';
+    }
 }
