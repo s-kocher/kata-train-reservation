@@ -15,4 +15,7 @@ public class Seat {
         return coach == other.coach && seatNumber == other.seatNumber;
     }
 
+    public boolean isFree() {
+        return true;
+    }
 }
