@@ -1,0 +1,25 @@
+TicketOfficeService
+Input :
+    - train id
+    - number of seats
+
+Output : Reservation
+    - train id
+    - booking reference
+    - seatsIds
+
+Algo need as external contributors :
+ - current train coach and available seats
+    => TrainDataService
+        input : trainId
+        output : list of Seats (id : "1A", booking reference, set number : 1, coach : "A"
+ - if ok : generate a new booking reference
+    => BookingReferenceService third party Rest Service
+    => ReservationService (input : trainId, seats, booking reference)
+
+If reservation is not possible :
+Output : Reservation
+     - train id
+     - booking reference => "" empty reference
+     - seatsIds => [] empty list
+
