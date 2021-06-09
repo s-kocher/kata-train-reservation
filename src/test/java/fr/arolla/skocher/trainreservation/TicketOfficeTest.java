@@ -80,6 +80,19 @@ public class TicketOfficeTest {
         );
     }
 
+    @Test
+    public void should_a_1_seat_reservation_in_a_2_coaches_train_where_first_and_second_coaches_are_full_be_authorized_in_third_coach() {
+        TicketOffice ticketOffice = new TicketOffice(new TrainDataServiceMock());
+
+        Reservation reservation = ticketOffice.makeReservation(
+            new ReservationRequest("ter_west", 1)
+        );
+
+        Assertions.assertThat(reservation.seats.get(0))
+            .isEqualTo(new Seat("Red", 1)
+            );
+    }
+
     public void isReservationApprovedForRightTrain(Reservation reservation, String trainId, int numberOfSeatsExpected) {
         Assertions.assertThat(reservation.trainId).isEqualTo(trainId);
         Assertions.assertThat(reservation.seats.size()).isEqualTo(numberOfSeatsExpected);

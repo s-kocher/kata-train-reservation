@@ -25,16 +25,19 @@ public class TicketOffice {
 
         List<Seat> bookedSeats = new ArrayList<>();
 
-        Seat firstSeat = train.seats.get(0);
-        int firstSeatNumber = firstSeat.seatNumber;
-        String firstSeatCoach = firstSeat.coach;
-
-        if (train.getCoachReservationRate(firstSeatCoach) >= 70) {
-            bookedSeats.add(new Seat("B", 1));
-        } else {
-            for (int seatNumber = firstSeatNumber; seatNumber <= request.seatCount; seatNumber++) {
-                bookedSeats.add(new Seat(firstSeatCoach, seatNumber));
+        Seat firstBookedSeat = null;
+        for (Seat seat : train.seats) {
+            int coachReservationRate = train.getCoachReservationRate(seat.coach);
+            if (coachReservationRate < 70) {
+                firstBookedSeat = seat;
+                break;
             }
+        }
+        int firstBookedSeatNumber = firstBookedSeat.seatNumber;
+        String firstBookedSeatCoach = firstBookedSeat.coach;
+
+        for (int seatNumber = firstBookedSeatNumber; seatNumber <= request.seatCount; seatNumber++) {
+            bookedSeats.add(new Seat(firstBookedSeatCoach, seatNumber));
         }
 
         return new Reservation(request.trainId, bookedSeats, "75bcd15");
