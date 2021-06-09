@@ -24,8 +24,11 @@ public class TicketOffice {
         }
 
         List<Seat> seats = new ArrayList<>();
-        for (int seatNumber=0;seatNumber<request.seatCount;seatNumber++) {
-            seats.add(new Seat("A", seatNumber));
+        Seat firstSeat = train.seats.get(0);
+        int firstSeatNumber = firstSeat.seatNumber;
+        String firstSeatCoach = firstSeat.coach;
+        for (int seatNumber=firstSeatNumber;seatNumber<=request.seatCount;seatNumber++) {
+            seats.add(new Seat(firstSeatCoach, seatNumber));
         }
 
         return new Reservation(request.trainId, seats, "75bcd15");

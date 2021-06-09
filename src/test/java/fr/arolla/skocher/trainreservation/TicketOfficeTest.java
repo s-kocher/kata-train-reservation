@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import fr.arolla.skocher.trainreservation.service.TrainDataService;
 import fr.arolla.skocher.trainreservation.service.TrainDataServiceMock;
 
 public class TicketOfficeTest {
@@ -50,6 +51,20 @@ public class TicketOfficeTest {
         );
 
         isReservationApprovedForRightTrain(reservation, "ter_north", 5);
+    }
+
+    @Test
+    public void should_approved_reservation_use_existing_train_seats() {
+        TrainDataService tds = new TrainDataServiceMock();
+        TicketOffice ticketOffice = new TicketOffice(tds);
+
+        Train train = tds.getTrainById("ter_north");
+
+        Reservation reservation = ticketOffice.makeReservation(
+            new ReservationRequest("ter_north", 2)
+        );
+
+        Assertions.assertThat(train.seats).containsAll(reservation.seats);
     }
 
     public void isReservationApprovedForRightTrain(Reservation reservation, String trainId, int numberOfSeatsExpected) {
