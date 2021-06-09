@@ -16,12 +16,6 @@ public class Train {
         this.seats = seats;
     }
 
-    public int getTrainReservationRate() {
-        int totalSeats = seats.size();
-        int totalBookedSeats = bookedSeats.size();
-        return totalBookedSeats * 100 / totalSeats;
-    }
-
     public boolean isSeatFree(Seat seat) {
         return !bookedSeats.contains(seat);
     }
@@ -30,19 +24,25 @@ public class Train {
         bookedSeats.add(seat);
     }
 
+    public int getTrainReservationRate() {
+        return getBookedSeatRate(bookedSeats, seats);
+    }
+
     public int getCoachReservationRate(String coach) {
         List<Seat> bookedCoachSeats = getCoachSeats(bookedSeats, coach);
         List<Seat> coachSeats = getCoachSeats(seats, coach);
 
-        int totalSeats = coachSeats.size();
-        int totalBookedSeats = bookedCoachSeats.size();
-        return totalBookedSeats * 100 / totalSeats;
+        return getBookedSeatRate(bookedCoachSeats, coachSeats);
     }
 
     private List<Seat> getCoachSeats(List<Seat> seats, String coach) {
         return seats.stream()
             .filter(seat -> seat.coach.equals(coach))
             .collect(Collectors.toList());
+    }
+
+    private int getBookedSeatRate(List<Seat> bookedSeats,  List<Seat> seats) {
+        return bookedSeats.size() * 100 / seats.size();
     }
 
 }
