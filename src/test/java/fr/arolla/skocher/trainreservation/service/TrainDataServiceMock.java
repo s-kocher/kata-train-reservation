@@ -15,19 +15,8 @@ public class TrainDataServiceMock implements TrainDataService {
     public TrainDataServiceMock() {
         //declare all needed trains for tests with different trains id for each situations
         //trains ids will be like persona
-        Train express2000 = new Train(
-            "express_2000",
-            createTrainSeats(10, "A")
-        );
-        bookTrainSeats(express2000, 7);
-        trainStore.add(express2000);
-
-        Train tgv100 = new Train(
-            "tgv_100",
-            createTrainSeats(10, "A")
-        );
-        trainStore.add(tgv100);
-
+        trainStore.add(createTrain("express_2000", 7, 10,"A"));
+        trainStore.add(createTrain("tgv_100", 0, 10,"A"));
     }
 
     public Train getTrainById(String trainId) {
@@ -35,6 +24,15 @@ public class TrainDataServiceMock implements TrainDataService {
             .filter(train -> train.getId().equals(trainId))
             .findFirst()
             .orElse(null);
+    }
+
+    private Train createTrain(String trainId, int numberOfSeatsBooked, int numberOfSeatsPerCoach, String... coaches) {
+        List<Seat> seats = createTrainSeats(numberOfSeatsPerCoach, coaches);
+        Train train = new Train(trainId, seats);
+
+        bookTrainSeats(train, numberOfSeatsBooked);
+
+        return train;
     }
 
     private List<Seat> createTrainSeats(int numberOfSeatsPerCoach, String... coaches) {
