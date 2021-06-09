@@ -9,7 +9,7 @@ public class Train {
     String id;
     List<Seat> seats;
 
-    List<Seat> bookedSeat = new ArrayList<>();
+    List<Seat> bookedSeats = new ArrayList<>();
 
     public Train(String id, List<Seat> seats) {
         this.id = id;
@@ -18,29 +18,31 @@ public class Train {
 
     public int getTrainReservationRate() {
         int totalSeats = seats.size();
-        int totalBookedSeats = bookedSeat.size();
+        int totalBookedSeats = bookedSeats.size();
         return totalBookedSeats * 100 / totalSeats;
     }
 
     public boolean isSeatFree(Seat seat) {
-        return !bookedSeat.contains(seat);
+        return !bookedSeats.contains(seat);
     }
 
     public void book(Seat seat) {
-        bookedSeat.add(seat);
+        bookedSeats.add(seat);
     }
 
     public int getCoachReservationRate(String coach) {
-    List<Seat> bookedCoachSeats = bookedSeat.stream()
-        .filter(seat -> seat.coach.equals(coach))
-        .collect(Collectors.toList());
-    List<Seat> coachSeats = seats.stream()
-        .filter(seat -> seat.coach.equals(coach))
-        .collect(Collectors.toList());
+        List<Seat> bookedCoachSeats = getCoachSeats(bookedSeats, coach);
+        List<Seat> coachSeats = getCoachSeats(seats, coach);
 
         int totalSeats = coachSeats.size();
         int totalBookedSeats = bookedCoachSeats.size();
         return totalBookedSeats * 100 / totalSeats;
+    }
+
+    private List<Seat> getCoachSeats(List<Seat> seats, String coach) {
+        return seats.stream()
+            .filter(seat -> seat.coach.equals(coach))
+            .collect(Collectors.toList());
     }
 
 }
