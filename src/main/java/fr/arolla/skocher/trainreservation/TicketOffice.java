@@ -1,5 +1,6 @@
 package fr.arolla.skocher.trainreservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.arolla.skocher.trainreservation.service.TrainDataService;
@@ -22,21 +23,12 @@ public class TicketOffice {
             );
         }
 
-        if (request.seatCount == 2) {
-            return new Reservation(
-                "express_2000",
-                List.of(
-                    new Seat("A", 1),
-                    new Seat("A", 2)
-                ),
-                "75bcd15"
-            );
+        List<Seat> seats = new ArrayList<>();
+        for (int seatNumber=0;seatNumber<request.seatCount;seatNumber++) {
+            seats.add(new Seat("A", seatNumber));
         }
-        return new Reservation(
-            "express_2000",
-            List.of(new Seat("A", 1)),
-            "75bcd15"
-        );
+
+        return new Reservation(request.trainId, seats, "75bcd15");
     }
 
 }
