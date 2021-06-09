@@ -1,8 +1,6 @@
 package fr.arolla.skocher.trainreservation;
 
-import java.util.List;
-
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import fr.arolla.skocher.trainreservation.service.TrainDataService;
@@ -18,12 +16,9 @@ public class TicketOfficeTest {
             new ReservationRequest("express_2000", 1)
         );
 
-        Reservation expectReservation = new Reservation(
-            "express_2000",
-            List.of(new Seat("A", 1)),
-            "75bcd15"
-        );
-        Assertions.assertEquals(expectReservation, reservation);
+        Assertions.assertThat(reservation.trainId).isEqualTo("express_2000");
+        Assertions.assertThat(reservation.seats.size()).isEqualTo(1);
+        Assertions.assertThat(reservation.bookingId).isNotEmpty();
     }
 
     @Test
@@ -34,14 +29,9 @@ public class TicketOfficeTest {
             new ReservationRequest("express_2000", 2)
         );
 
-        Reservation expectReservation = new Reservation(
-            "express_2000",
-            List.of(
-                new Seat("A", 1),
-                new Seat("A", 2)),
-            "75bcd15"
-        );
-        Assertions.assertEquals(expectReservation, reservation);
+        Assertions.assertThat(reservation.trainId).isEqualTo("express_2000");
+        Assertions.assertThat(reservation.seats.size()).isEqualTo(2);
+        Assertions.assertThat(reservation.bookingId).isNotEmpty();
     }
 
     @Test
@@ -52,12 +42,9 @@ public class TicketOfficeTest {
             new ReservationRequest("tgv_100", 1)
         );
 
-        Reservation expectReservation = new Reservation(
-            "tgv_100",
-            List.of(),
-            ""
-        );
-        Assertions.assertEquals(expectReservation, reservation);
+        Assertions.assertThat(reservation.trainId).isEqualTo("tgv_100");
+        Assertions.assertThat(reservation.seats.size()).isEqualTo(0);
+        Assertions.assertThat(reservation.bookingId).isEmpty();
     }
 
 }
