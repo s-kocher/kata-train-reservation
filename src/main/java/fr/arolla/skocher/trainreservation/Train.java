@@ -16,6 +16,10 @@ public class Train {
         this.seats = seats;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public boolean isSeatFree(Seat seat) {
         return !bookedSeats.contains(seat);
     }
