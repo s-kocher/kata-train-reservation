@@ -8,7 +8,8 @@ import fr.arolla.skocher.trainreservation.service.TrainDataService;
 public class TicketOffice {
 
     public static final int MAX_ALLOWED_RESERVATION_RATE = 70;
-    private TrainDataService trainDataService;
+
+    private final TrainDataService trainDataService;
 
     public TicketOffice(TrainDataService trainDataService) {
         this.trainDataService = trainDataService;
@@ -25,7 +26,8 @@ public class TicketOffice {
         Seat firstBookedSeat = null;
         for (Seat seat : train.seats) {
             int coachReservationRate = train.getCoachReservationRate(seat.coach);
-            if (coachReservationRate < 70) {
+
+            if (coachReservationRate < 70 && train.isSeatFree(seat)) {
                 firstBookedSeat = seat;
                 break;
             }
@@ -35,11 +37,12 @@ public class TicketOffice {
             return getEmptyReservation(request.trainId);
         }
 
-        int firstBookedSeatNumber = firstBookedSeat.seatNumber;
+        int bookedSeatNumber = firstBookedSeat.seatNumber;
         String firstBookedSeatCoach = firstBookedSeat.coach;
-
-        for (int seatNumber = firstBookedSeatNumber; seatNumber <= request.seatCount; seatNumber++) {
-            bookedSeats.add(new Seat(firstBookedSeatCoach, seatNumber));
+        int seatsToBook = request.seatCount;
+        while (seatsToBook > 0) {
+            bookedSeats.add(new Seat(firstBookedSeatCoach, bookedSeatNumber++));
+            seatsToBook--;
         }
 
         return new Reservation(request.trainId, bookedSeats, "75bcd15");

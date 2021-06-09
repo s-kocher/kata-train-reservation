@@ -68,6 +68,22 @@ public class TicketOfficeTest {
     }
 
     @Test
+    public void should_approved_reservation_in_partially_booked_coach_but_still_allowed_seat_use_the_right_seats_numbers() {
+        TrainDataService tds = new TrainDataServiceMock();
+        TicketOffice ticketOffice = new TicketOffice(tds);
+
+        Train train = tds.getTrainById("ter_north");
+
+        Reservation reservation = ticketOffice.makeReservation(
+            new ReservationRequest("ter_north", 2)
+        );
+
+        Assertions.assertThat(reservation.seats.size()).isEqualTo(2);
+        Assertions.assertThat(reservation.seats.get(0).seatNumber).isEqualTo(11);
+        Assertions.assertThat(reservation.seats.get(1).seatNumber).isEqualTo(12);
+    }
+
+    @Test
     public void should_a_1_seat_reservation_in_a_2_coaches_train_where_first_coach_is_full_be_authorized_in_second_coach() {
         TicketOffice ticketOffice = new TicketOffice(new TrainDataServiceMock());
 
