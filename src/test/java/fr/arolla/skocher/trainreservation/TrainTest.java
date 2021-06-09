@@ -8,6 +8,19 @@ import org.junit.jupiter.api.Test;
 public class TrainTest {
 
     @Test
+    public void should_seat_without_booking_reference_be_free() {
+        Seat seat = new Seat("A", 1);
+        Train train = new Train(
+            "express_2000",
+            List.of( seat)
+        );
+
+        boolean isSeatFree = train.isSeatFree(seat);
+
+        Assertions.assertTrue(isSeatFree);
+    }
+
+    @Test
     public void should_train_with_all_free_seats_be_0_percent_full() {
         Train train = new Train(
             "express_2000",

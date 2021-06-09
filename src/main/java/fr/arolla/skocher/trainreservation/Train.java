@@ -16,4 +16,8 @@ public class Train {
         return 0;
     }
 
+    public boolean isSeatFree(Seat seat) {
+        return true;
+    }
+
 }
