@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class TrainTest {
 
     @Test
-    public void should_seat_without_booking_reference_be_free() {
+    public void should_seat_not_booked_be_free() {
         Seat seat = new Seat("A", 1);
         Train train = new Train(
             "express_2000",
@@ -18,6 +18,21 @@ public class TrainTest {
         boolean isSeatFree = train.isSeatFree(seat);
 
         Assertions.assertTrue(isSeatFree);
+    }
+
+    @Test
+    public void should_booked_seat_be_not_free() {
+        Seat seat = new Seat("A", 1);
+        Train train = new Train(
+            "express_2000",
+            List.of( seat)
+        );
+
+        train.book(seat);
+
+        boolean isSeatFree = train.isSeatFree(seat);
+
+        Assertions.assertFalse(isSeatFree);
     }
 
     @Test

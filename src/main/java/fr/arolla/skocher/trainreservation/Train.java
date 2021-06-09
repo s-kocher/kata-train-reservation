@@ -1,11 +1,14 @@
 package fr.arolla.skocher.trainreservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Train {
 
     String id;
     List<Seat> seats;
+
+    List<Seat> bookedSeat = new ArrayList<>();
 
     public Train(String id, List<Seat> seats) {
         this.id = id;
@@ -17,7 +20,10 @@ public class Train {
     }
 
     public boolean isSeatFree(Seat seat) {
-        return true;
+        return !bookedSeat.contains(seat);
     }
 
+    public void book(Seat seat) {
+        bookedSeat.add(seat);
+    }
 }
