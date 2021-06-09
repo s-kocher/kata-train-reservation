@@ -23,15 +23,21 @@ public class TicketOffice {
             );
         }
 
-        List<Seat> seats = new ArrayList<>();
+        List<Seat> bookedSeats = new ArrayList<>();
+
         Seat firstSeat = train.seats.get(0);
         int firstSeatNumber = firstSeat.seatNumber;
         String firstSeatCoach = firstSeat.coach;
-        for (int seatNumber=firstSeatNumber;seatNumber<=request.seatCount;seatNumber++) {
-            seats.add(new Seat(firstSeatCoach, seatNumber));
+
+        if (train.getCoachReservationRate(firstSeatCoach) >= 70) {
+            bookedSeats.add(new Seat("B", 1));
+        } else {
+            for (int seatNumber = firstSeatNumber; seatNumber <= request.seatCount; seatNumber++) {
+                bookedSeats.add(new Seat(firstSeatCoach, seatNumber));
+            }
         }
 
-        return new Reservation(request.trainId, seats, "75bcd15");
+        return new Reservation(request.trainId, bookedSeats, "75bcd15");
     }
 
 }

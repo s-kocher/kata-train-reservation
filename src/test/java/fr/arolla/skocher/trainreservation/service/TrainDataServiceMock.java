@@ -18,6 +18,7 @@ public class TrainDataServiceMock implements TrainDataService {
         trainStore.add(createTrain("express_2000", 0, 10,"A"));
         trainStore.add(createTrain("tgv_100", 7, 10,"A"));
         trainStore.add(createTrain("ter_north", 10, 100,"Blue"));
+        trainStore.add(createTrain("ter_south", 5, 5,"A", "B"));
     }
 
     public Train getTrainById(String trainId) {
