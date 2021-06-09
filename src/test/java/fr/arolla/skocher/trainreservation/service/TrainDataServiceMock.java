@@ -22,7 +22,11 @@ public class TrainDataServiceMock implements TrainDataService {
         bookTrainSeats(express2000, 7);
         trainStore.add(express2000);
 
-        trainStore.add(new Train("tgv_100",new ArrayList<>()));
+        Train tgv100 = new Train(
+            "tgv_100",
+            createTrainSeats(10, "A")
+        );
+        trainStore.add(tgv100);
 
     }
 
