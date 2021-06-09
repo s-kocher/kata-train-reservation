@@ -15,8 +15,9 @@ public class TrainDataServiceMock implements TrainDataService {
     public TrainDataServiceMock() {
         //declare all needed trains for tests with different trains id for each situations
         //trains ids will be like persona
-        trainStore.add(createTrain("express_2000", 7, 10,"A"));
-        trainStore.add(createTrain("tgv_100", 0, 10,"A"));
+        trainStore.add(createTrain("express_2000", 0, 10,"A"));
+        trainStore.add(createTrain("tgv_100", 7, 10,"A"));
+
     }
 
     public Train getTrainById(String trainId) {
