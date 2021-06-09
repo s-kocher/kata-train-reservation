@@ -60,7 +60,7 @@ public class TrainTest {
                 new Seat("A", 2)
             )
         );
-        train.book(train.seats.get(0));
+        bookTrainSeats(train, 1);
 
         int trainReservationRate = train.getTrainReservationRate();
 
@@ -75,9 +75,7 @@ public class TrainTest {
         }
         Train train = new Train("express_2000", seats);
 
-        for (int i=0; i<7; i++) {
-            train.book(train.seats.get(i));
-        }
+        bookTrainSeats(train, 7);
 
         int trainReservationRate = train.getTrainReservationRate();
 
@@ -108,11 +106,17 @@ public class TrainTest {
                 new Seat("A", 2)
             )
         );
-        train.book(train.seats.get(0));
+        bookTrainSeats(train, 1);
 
         int coachReservationRate = train.getCoachReservationRate("A");
 
         Assertions.assertEquals(50, coachReservationRate);
+    }
+
+    private void bookTrainSeats(Train train, int numberOfSeats) {
+        for (int i=0; i<numberOfSeats; i++) {
+            train.book(train.seats.get(i));
+        }
     }
 
 }
