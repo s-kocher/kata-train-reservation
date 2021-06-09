@@ -20,4 +20,15 @@ class TrainDataServiceMockTest {
 
     }
 
+    @Test
+    public void should_retrieve_tgv_100_train() {
+        TrainDataService trainDataService = new TrainDataServiceMock();
+
+        Train train = trainDataService.getTrainById("tgv_100");
+
+        Assertions.assertNotNull(train);
+        Assertions.assertEquals("tgv_100", train.getId());
+
+    }
+
 }
