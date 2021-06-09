@@ -1,5 +1,6 @@
 package fr.arolla.skocher.trainreservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -64,6 +65,23 @@ public class TrainTest {
         int trainReservationRate = train.getTrainReservationRate();
 
         Assertions.assertEquals(50, trainReservationRate);
+    }
+
+    @Test
+    public void should_train_of_10_seats_and_7_booked_be_70_percent_full() {
+        List<Seat> seats = new ArrayList<>();
+        for (int i=1; i<11; i++) {
+            seats.add(new Seat("A", i));
+        }
+        Train train = new Train("express_2000", seats);
+
+        for (int i=0; i<7; i++) {
+            train.book(train.seats.get(i));
+        }
+
+        int trainReservationRate = train.getTrainReservationRate();
+
+        Assertions.assertEquals(70, trainReservationRate);
     }
 
 }

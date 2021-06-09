@@ -16,10 +16,9 @@ public class Train {
     }
 
     public int getTrainReservationRate() {
-        if (bookedSeat.size() > 0) {
-            return 50;
-        }
-        return 0;
+        int totalSeats = seats.size();
+        int totalBookedSeat = bookedSeat.size();
+        return totalBookedSeat * 100 / totalSeats;
     }
 
     public boolean isSeatFree(Seat seat) {
