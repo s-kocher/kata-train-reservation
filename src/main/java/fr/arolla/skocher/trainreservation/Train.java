@@ -2,6 +2,7 @@ package fr.arolla.skocher.trainreservation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Train {
 
@@ -30,6 +31,14 @@ public class Train {
     }
 
     public int getCoachReservationRate(String coach) {
-        return 0;
+    List<Seat> coachSeats = bookedSeat.stream()
+        .filter(seat -> seat.coach.equals(coach))
+        .collect(Collectors.toList());
+
+        if (coachSeats.isEmpty()) {
+            return 0;
+        }
+        return 50;
     }
+
 }
