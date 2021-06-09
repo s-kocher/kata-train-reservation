@@ -16,6 +16,9 @@ public class Train {
     }
 
     public int getTrainReservationRate() {
+        if (bookedSeat.size() > 0) {
+            return 50;
+        }
         return 0;
     }
 
