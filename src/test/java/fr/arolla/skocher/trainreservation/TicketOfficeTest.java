@@ -16,9 +16,7 @@ public class TicketOfficeTest {
             new ReservationRequest("express_2000", 1)
         );
 
-        Assertions.assertThat(reservation.trainId).isEqualTo("express_2000");
-        Assertions.assertThat(reservation.seats.size()).isEqualTo(1);
-        Assertions.assertThat(reservation.bookingId).isNotEmpty();
+        isReservationApprovedForRightTrain(reservation, "express_2000", 1);
     }
 
     @Test
@@ -29,9 +27,7 @@ public class TicketOfficeTest {
             new ReservationRequest("express_2000", 2)
         );
 
-        Assertions.assertThat(reservation.trainId).isEqualTo("express_2000");
-        Assertions.assertThat(reservation.seats.size()).isEqualTo(2);
-        Assertions.assertThat(reservation.bookingId).isNotEmpty();
+        isReservationApprovedForRightTrain(reservation, "express_2000", 2);
     }
 
     @Test
@@ -42,7 +38,17 @@ public class TicketOfficeTest {
             new ReservationRequest("tgv_100", 1)
         );
 
-        Assertions.assertThat(reservation.trainId).isEqualTo("tgv_100");
+        isReservationRejectedForRightTrain(reservation, "tgv_100");
+    }
+
+    public void isReservationApprovedForRightTrain(Reservation reservation, String trainId, int numberOfSeatsExpected) {
+        Assertions.assertThat(reservation.trainId).isEqualTo(trainId);
+        Assertions.assertThat(reservation.seats.size()).isEqualTo(numberOfSeatsExpected);
+        Assertions.assertThat(reservation.bookingId).isNotEmpty();
+    }
+
+    public void isReservationRejectedForRightTrain(Reservation reservation, String trainId) {
+        Assertions.assertThat(reservation.trainId).isEqualTo(trainId);
         Assertions.assertThat(reservation.seats.size()).isEqualTo(0);
         Assertions.assertThat(reservation.bookingId).isEmpty();
     }
