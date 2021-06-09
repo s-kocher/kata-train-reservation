@@ -28,6 +28,10 @@ public class Train {
         bookedSeats.add(seat);
     }
 
+    public void book(int seatIndex) {
+        bookedSeats.add(seats.get(seatIndex));
+    }
+
     public int getTrainReservationRate() {
         return getBookedSeatRate(bookedSeats, seats);
     }

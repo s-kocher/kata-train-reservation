@@ -17,7 +17,6 @@ class TrainDataServiceMockTest {
 
         Assertions.assertNotNull(train);
         Assertions.assertEquals("express_2000", train.getId());
-
     }
 
     @Test
@@ -28,7 +27,15 @@ class TrainDataServiceMockTest {
 
         Assertions.assertNotNull(train);
         Assertions.assertEquals("tgv_100", train.getId());
+    }
 
+    @Test
+    public void should_retrieve_express_2000_train_with_global_70_reservation() {
+        TrainDataService trainDataService = new TrainDataServiceMock();
+
+        Train train = trainDataService.getTrainById("express_2000");
+
+        Assertions.assertEquals(70, train.getTrainReservationRate());
     }
 
 }
