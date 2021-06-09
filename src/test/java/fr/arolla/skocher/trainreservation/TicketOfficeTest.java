@@ -109,6 +109,28 @@ public class TicketOfficeTest {
             );
     }
 
+    @Test
+    public void should_reservation_with_many_seats_be_in_second_coach_to_not_exceed_the_reservation_limit_for_first_coach() {
+        TicketOffice ticketOffice = new TicketOffice(new TrainDataServiceMock());
+
+        //ter_est train has 2 coaches of 205 seats, at start, 13 seats already booked,
+        // Start situation : train is 32% booked, and first coach is 65%
+        // Booking evaluation :
+        // - 2 seats are allowed since global train reservations will be 37% after
+        // - first coach cannot be used since after booking 2 other seats inside it, its reservation will be 75%
+        Reservation reservation = ticketOffice.makeReservation(
+            new ReservationRequest("ter_est", 2)
+        );
+
+        isReservationApprovedForRightTrain(reservation, "ter_est", 2);
+        Assertions.assertThat(reservation.seats.get(0))
+            .isEqualTo(new Seat("B", 1)
+        );
+        Assertions.assertThat(reservation.seats.get(1))
+            .isEqualTo(new Seat("B", 2)
+        );
+    }
+
     public void isReservationApprovedForRightTrain(Reservation reservation, String trainId, int numberOfSeatsExpected) {
         Assertions.assertThat(reservation.trainId).isEqualTo(trainId);
         Assertions.assertThat(reservation.seats.size()).isEqualTo(numberOfSeatsExpected);

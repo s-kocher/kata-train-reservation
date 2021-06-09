@@ -33,14 +33,17 @@ public class Train {
     }
 
     public int getTrainReservationRate() {
-        return getBookedSeatRate(bookedSeats, seats);
+        return getBookedSeatRate(bookedSeats, seats, 0);
     }
 
-    public int getCoachReservationRate(String coach) {
+    public int getCoachReservationRateWithNewBookSeats(String coach, int newBookedSeats) {
         List<Seat> bookedCoachSeats = getCoachSeats(bookedSeats, coach);
         List<Seat> coachSeats = getCoachSeats(seats, coach);
 
-        return getBookedSeatRate(bookedCoachSeats, coachSeats);
+        return getBookedSeatRate(bookedCoachSeats, coachSeats, newBookedSeats);
+    }
+    public int getCoachReservationRate(String coach) {
+        return getCoachReservationRateWithNewBookSeats(coach, 0);
     }
 
     private List<Seat> getCoachSeats(List<Seat> seats, String coach) {
@@ -49,8 +52,8 @@ public class Train {
             .collect(Collectors.toList());
     }
 
-    private int getBookedSeatRate(List<Seat> bookedSeats,  List<Seat> seats) {
-        return bookedSeats.size() * 100 / seats.size();
+    private int getBookedSeatRate(List<Seat> bookedSeats,  List<Seat> seats, int newBookedSeats) {
+        return (bookedSeats.size() + newBookedSeats) * 100 / seats.size();
     }
 
 }
