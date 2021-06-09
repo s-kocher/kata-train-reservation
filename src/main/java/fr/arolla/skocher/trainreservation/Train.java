@@ -28,4 +28,8 @@ public class Train {
     public void book(Seat seat) {
         bookedSeat.add(seat);
     }
+
+    public int getCoachReservationRate(String coach) {
+        return 0;
+    }
 }

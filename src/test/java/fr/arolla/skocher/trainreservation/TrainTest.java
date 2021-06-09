@@ -84,4 +84,19 @@ public class TrainTest {
         Assertions.assertEquals(70, trainReservationRate);
     }
 
+    @Test
+    public void should_train_coach_with_all_free_seats_be_0_percent_full() {
+        Train train = new Train(
+            "express_2000",
+            List.of(
+                new Seat("A", 1),
+                new Seat("A", 2)
+            )
+        );
+
+        int coachReservationRate = train.getCoachReservationRate("A");
+
+        Assertions.assertEquals(0, coachReservationRate);
+    }
+
 }
