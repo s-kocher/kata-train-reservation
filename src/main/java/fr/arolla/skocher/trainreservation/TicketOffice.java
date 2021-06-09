@@ -27,7 +27,7 @@ public class TicketOffice {
         for (Seat seat : train.seats) {
             int coachReservationRate = train.getCoachReservationRate(seat.coach);
 
-            if (coachReservationRate < 70 && train.isSeatFree(seat)) {
+            if (coachReservationRate < MAX_ALLOWED_RESERVATION_RATE && train.isSeatFree(seat)) {
                 firstBookedSeat = seat;
                 break;
             }
